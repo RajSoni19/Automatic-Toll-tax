@@ -1,2 +1,41 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+#include <Servo.h>
+Servo servo; // Object creation  
+int angle=0;
+long duration;
+long distance;
+
+void setup() 
+{
+  servo.attach(9);
+  servo.write(angle);
+  pinMode(7,INPUT); //echo
+  pinMode(8,OUTPUT); //trig
+  pinMode(13, OUTPUT);
+}
+void loop() 
+{ 
+  digitalWrite(8,LOW);
+  delayMicroseconds(2);
+  digitalWrite(8,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(8,LOW);
+
+  duration=pulseIn(7,HIGH);
+
+  distance = duration/58.2;
+
+  Serial.println(distance);
+
+  delay(50);
+
+   if(distance < 10)
+  {
+     
+       servo.write(0);
+    delay(500);                
+  }
+  else{
+    servo.write(90);
+  delay(500);
+  }
+}
